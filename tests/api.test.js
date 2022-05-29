@@ -10,6 +10,13 @@ describe('Test for FTL Ships API endpoints: create, list', () => {
         
     });
 
+    it('Insert one ship with <health> value below 0', async () => {
+        
+        const response = await request(app).post('/ships').send( {health: -1} );
+        expect(response.statusCode).toEqual(400);
+        
+    });
+
     it('Insert one ship with no <health> value', async () => {
         
         const response = await request(app).post('/ships').send( {} );

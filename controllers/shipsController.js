@@ -1,7 +1,7 @@
 const SpaceShips = require("../models/SpaceShips");
 
 const ships = new SpaceShips
-
+const exceptions = require('../exeptionStrings');
 const shipsController = {
 
     getAll : (req, res) => {
