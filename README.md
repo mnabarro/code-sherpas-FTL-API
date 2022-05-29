@@ -15,6 +15,8 @@ Test suite will include one test for each endpoint of this API.
  	
 	 B spaceship health decreases by 1 with each shoot received.
  
+ - Feature #4: <health> paramenter cannot be negative.
+ 
 ## Running the app
 Open a terminal window. Chdir to the project's folder
 
@@ -30,7 +32,7 @@ Run:
 
     The only parameter to set is "health". If no value is provided, the request is discarded an the server responses with a 400 error.
 
-    If you try to create a ship with health values out of range ( health is > 100 ), the request is discarded an the server responses with a 400 error.
+    If you try to create a ship with health values out of range ( 0, 100 ), the request is discarded an the server responses with a 400 error.
 
     If there's any problem with the request. i.e corrupted or malfomed JSON, the API responses with an 400 error code and a short description of the problem.
 	

@@ -20,7 +20,11 @@ const shootsController = {
 
         //Read health and substracts 1
         const prevHealth = ships.ships[toShip].getHealth();
-        ships.ships[toShip].setHealth(prevHealth -1);
+
+        if (prevHealth > 0) {
+
+            ships.ships[toShip].setHealth(prevHealth -1);
+        }
 
         return res.status(200).json({statusCode : 200, toShip: ships.ships[toShip]});
     }
