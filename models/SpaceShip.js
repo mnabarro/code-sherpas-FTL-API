@@ -13,7 +13,7 @@ class SpaceShip {
 
     setHealth ( health ){
         
-        if (health > 100) {
+        if (health > 100 || health < 0) {
             throw new Error( exceptions.outOfRange);
         }
         
