@@ -1,7 +1,7 @@
 const request = require ('supertest');
 const app = require ('../app');
 
-describe('Test suite for FTL Ships API endpoints', () => {
+describe('Test for FTL Ships API endpoints: create, list', () => {
   
     it('Insert one ship with valid <health> value', async () => {
         
@@ -33,4 +33,22 @@ describe('Test suite for FTL Ships API endpoints', () => {
         expect(response.body).toHaveProperty('count', 1);
         
     });
+});
+
+describe('Test for FTL Ships API endpoints: shoots', () => {
+
+    it('Insert one ship with valid <health> value', async () => {
+        
+        const response = await request(app).post('/ships').send( {health: 80} );
+        expect(response.statusCode).toEqual(201);
+        
+    });
+
+    it('Shoots from spaceship[1] to spacechip[0]', async () => {
+        
+        const response = await request(app).post('/shoots').send( {fromShip: 1, toShip: 0} );
+        expect(response.statusCode).toEqual(200);
+        expect(response.body).toHaveProperty('toShip.health', 99);
+    });
+
 });

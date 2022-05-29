@@ -1,3 +1,5 @@
+const exceptions = require('../exeptionStrings');
+
 class SpaceShip {
 
     constructor ( health ) {
@@ -12,7 +14,7 @@ class SpaceShip {
     setHealth ( health ){
         
         if (health > 100) {
-            throw new Error('Health out of range');
+            throw new Error( exceptions.outOfRange);
         }
         
         this.health = health;
