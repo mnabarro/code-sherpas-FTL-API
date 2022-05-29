@@ -4,6 +4,7 @@ const exceptions = {
     fromShipNotFound: 'The ship defined by <fromShip> not found in database.',
     toShipNotFound: 'The ship defined by <toShip> not found in database.',
     shipsParamsRequired : '<fromShip> and <toShip> parameters are required.',
+    shipCannotShoot : '<fromShip> needs health > 0 to be able to shoot.'
 }
 
 
