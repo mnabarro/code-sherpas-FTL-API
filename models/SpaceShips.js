@@ -2,20 +2,20 @@ const SpaceShip = require('./SpaceShip');
 
 class SpaceShips {
 
-    constructor () {
-        this.ships = new Array;        
+    constructor() {
+        this.ships = new Array;
     }
 
-    getAll () {
+    getAll() {
         return this.ships;
     }
 
-    getCount () {
+    getCount() {
         return this.ships.length;
     }
 
-    add ( health ) {
-        const newShip = new SpaceShip( health );
+    add(health) {
+        const newShip = new SpaceShip(health);
         this.ships.push(newShip);
     }
 }
