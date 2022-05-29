@@ -18,12 +18,18 @@ const shootsController = {
             return res.status(400).json({error: exceptions.toShipNotFound});        
         }
 
-        //Read health and substracts 1
-        const prevHealth = ships.ships[toShip].getHealth();
+        //Read health from both spaceships.
+        const toShipHealth = ships.ships[toShip].getHealth();
+        const fromShipHealth = ships.ships[fromShip].getHealth();
+        
+        // <fromShip> must have health > 0 to shoot.
+        if (fromShipHealth < 1) {
+            return res.status(400).json({statusCode: 400, error: exceptions.shipCannotShoot});
+        }
 
-        if (prevHealth > 0) {
-
-            ships.ships[toShip].setHealth(prevHealth -1);
+        //<toShip>'s health cannot get below 0. 
+        if (toShipHealth > 0) {
+            ships.ships[toShip].setHealth(toShipHealth -1);
         }
 
         return res.status(200).json({statusCode : 200, toShip: ships.ships[toShip]});

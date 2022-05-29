@@ -15,8 +15,9 @@ Test suite will include one test for each endpoint of this API.
  	
 	 B spaceship health decreases by 1 with each shoot received.
  
- - Feature #4: <health> paramenter cannot be negative.
- 
+ - Feature #4: "health" paramenter cannot be negative.
+ - Feature #5: Spaceships with "health" = 0 can't shoot.
+
 ## Running the app
 Open a terminal window. Chdir to the project's folder
 
@@ -74,17 +75,26 @@ Run:
 	 
 	Also you will get an error if parameters are present but there is no spaceship for that index in our database-array.
 
+	If the "fromShip" has a health value = 0, it can't shoot. The API responses with a 400 status and a description of error.
+
 ```javascript
 // Example POST http://localhost:3100/shoots with valid parameters
 {
 	"fromShip": 0,
 	"toShip": 2
 }
+
 // Response
 {
 	"statusCode": 200,
 	"toShip": {
 		"health": 43
 	}
+}
+
+// Response if "fromShip" <health> value = 0
+{
+	"statusCode": 400,
+	"error": "<fromShip> needs health > 0 to be able to shoot."
 }
 ```
