@@ -10,7 +10,8 @@ const shipsController = {
             data: ships.getAll().map((value, idx) => {
                 return {
                     idx,
-                    health: value.health
+                    health: value.health,
+                    totalPower : value.generator.totalPower 
                 }
             })
         });
@@ -27,7 +28,7 @@ const shipsController = {
 
         try {
             ships.add(health);
-
+            
             return res.status(201).json({
                 StatusCode: 201
             })
