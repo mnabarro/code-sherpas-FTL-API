@@ -18,6 +18,7 @@ Test suite will include one test for each endpoint of this API.
  - Feature #4: "health" paramenter cannot be negative.
  - Feature #5: Spaceships with "health" = 0 can't shoot.
  - Feature #6: Each spaceship must have its own weapon, wich will be responsible for shooting to other ships when required.
+ - Feature #7: We add a generator to spaceships created, with some new attributes ( totalPower, powerNotInUse, totalRequiredPower ).
 
 ## Running the app
 Open a terminal window. Chdir to the project's folder
@@ -60,12 +61,14 @@ Run:
 	"count": 2,
 	"data": [
 		{
-			"idx": 0
-			"health": 100
+			"idx": 0,
+			"health": 100,
+			"totalPower": 100
 		},
 		{
-			"idx": 1
-			"health": 90
+			"idx": 1,
+			"health": 90,
+			"totalPower": 100
 		}
 	]
 }

@@ -1,11 +1,16 @@
 const exceptions = require('../exeptionStrings');
 const Weapon = require('./Weapon');
+const Generator = require ('./Generator');
 
 class SpaceShip {
+
+    totalConsumedPower = 0
+    health = 0
 
     constructor(health) {
 
         this.weapon = new Weapon;
+        this.generator = new Generator;
         this.setHealth(health);
     }
 
