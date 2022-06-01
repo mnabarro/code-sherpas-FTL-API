@@ -7,49 +7,36 @@ const shootsController = {
     shoot: (req, res) => {
         const fromShip = req.body.fromShip;
         const toShip = req.body.toShip;
-
-        if (typeof fromShip == 'undefined' || typeof toShip == 'undefined') {
-            return res.status(400).json({
-                error: exceptions.shipsParamsRequired
-            });
-        }
-
-        if (typeof ships.ships[fromShip] == 'undefined') {
-            return res.status(400).json({
-                error: exceptions.fromShipNotFound
-            });
-        }
-
-        if (typeof ships.ships[toShip] == 'undefined') {
-            return res.status(400).json({
-                error: exceptions.toShipNotFound
-            });
-        }
-
-        //Read health from both spaceships.
-        const toShipHealth = ships.ships[toShip].getHealth();
-
         const toSpaceShip = ships.ships[toShip];
+        
+        try {
+            if (typeof fromShip == 'undefined' || typeof toShip == 'undefined') {
+                throw new Error(exceptions.shipsParamsRequired);
+            }
+    
+            if (typeof ships.ships[fromShip] == 'undefined') {
+                throw new Error(exceptions.fromShipNotFound);
+            }
+    
+            if (typeof ships.ships[toShip] == 'undefined') {
+                throw new Error(exceptions.toShipNotFound);
+            }
 
-        const fromShipHealth = ships.ships[fromShip].getHealth();
+            ships.ships[fromShip].shoot(toSpaceShip);
+            
+            return res.status(200).json({
+                statusCode: 200,
+                toShipHealth: toSpaceShip.getHealth()
+    
+            });
 
-        // <fromShip> must have health > 0 to shoot.
-        if (fromShipHealth < 1) {
+        } catch (err) {
+
             return res.status(400).json({
                 statusCode: 400,
-                error: exceptions.shipCannotShoot
+                error: err.message
             });
         }
-
-        //<toShip>'s health cannot get below 0. 
-        if (toShipHealth > 0) {
-            ships.ships[fromShip].weapon.shoot(toSpaceShip);
-        }
-
-        return res.status(200).json({
-            statusCode: 200,
-            toShipHealth: toSpaceShip.getHealth()
-        });
     }
 }
 
