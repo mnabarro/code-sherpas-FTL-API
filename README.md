@@ -19,6 +19,8 @@ Test suite will include one test for each endpoint of this API.
  - Feature #5: Spaceships with "health" = 0 can't shoot.
  - Feature #6: Each spaceship must have its own weapon, wich will be responsible for shooting to other ships when required.
  - Feature #7: We add a generator to spaceships created, with some new attributes ( totalPower, powerNotInUse, totalRequiredPower ).
+ - Feature #8: Implements the power calculations required. See original specification for details.
+ - Feature #9: The Game Master should be able to set power-consumed-by-weapon.
 
 ## Running the app
 Open a terminal window. Chdir to the project's folder
@@ -74,6 +76,30 @@ Run:
 }
 ```
 
+- #### Find a spaceship by its index
+    **GET** http://localhost:3100/ships/:id 
+
+```javascript
+// Example response for GET http://localhost:3100/ships/0
+{
+	"health": 44,
+	"weapon": {
+		"powerConsumed": 20,
+		"powerNeeded": 20
+	},
+	"generator": {
+		"totalPower": 100,
+		"powerNotInUse": 100,
+		"totalRequiredPower": 0
+	}
+}
+
+// Example response for GET http://localhost:3100/ships/3 (Not found)
+{
+	"error": "Ship not found in database."
+}
+```
+
 - #### Shoots
     **POST** http://localhost:3100/shoots 
 
@@ -100,5 +126,38 @@ Run:
 {
 	"statusCode": 400,
 	"error": "<fromShip> needs health > 0 to be able to shoot."
+}
+```
+- #### Set weapon consumed power
+    **PUT** http://localhost:3100/ships/0 
+
+	The only allowed parameter is "weaponPower". It must be between 0 and spaceships's weapon-power-needed value. Otherwise, it will not be proccesed.
+
+```javascript
+// Example PUT http://localhost:3100/ships with valid parameter
+{
+	"weaponPower" : 16
+}
+
+// Response
+{
+	"status": {
+		"total-power": 100,
+		"weapon-power-needed": 20,
+		"power-consumed-by-weapon": 16,
+		"power-not-in-use": 84
+	}
+}
+
+// Response if "weaponPower" value < 0
+{
+	{
+		"error": "Power value to asign must be equal or greater than 0."
+	}
+}
+
+// Response if "weaponPower" value > weapon-power-needed
+{
+	"error": "Trying to set weapon's power above allowed maximum: [20]."
 }
 ```

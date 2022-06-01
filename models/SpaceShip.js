@@ -4,7 +4,6 @@ const Generator = require ('./Generator');
 
 class SpaceShip {
 
-    totalConsumedPower = 0
     health = 0
 
     constructor(health) {
@@ -12,6 +11,24 @@ class SpaceShip {
         this.weapon = new Weapon;
         this.generator = new Generator;
         this.setHealth(health);
+    }
+
+    setWeaponPowerConsumed ( pwr ) {
+        if (pwr > this.weapon.powerNeeded) {
+            throw new Error (exceptions.weaponPowerOverload + `: [${this.weapon.powerNeeded}].`);
+        }
+
+        this.weapon.setPowerConsumed( pwr );
+        this.generator.setTotalRequiredPower( pwr )
+    }   
+
+    shoot( toShip ) {
+    
+        if (this.health < 1) {
+            throw new Error(exceptions.shipCannotShoot);
+        }
+
+        this.weapon.shoot( toShip );
     }
 
     getHealth() {
@@ -23,8 +40,8 @@ class SpaceShip {
         if (health > 100 || health < 0) {
             throw new Error(exceptions.outOfRange);
         }
+            this.health = health;
 
-        this.health = health;
     }
 
     //Decreases this.health by 1 unit.

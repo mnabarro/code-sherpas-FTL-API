@@ -5,11 +5,14 @@ class SpaceShips {
     constructor() {
         this.ships = new Array;
     }
-
     getAll() {
         return this.ships;
     }
 
+    findByPk ( id ) {
+        return this.ships[id];
+    }
+    
     getCount() {
         return this.ships.length;
     }
